@@ -39,8 +39,8 @@ public class RouteTrackActivity extends FragmentActivity implements OnMapReadyCa
         mMap = googleMap;
 
         // Add a marker in Sydney and move the camera
-        LatLng sydney = new LatLng(-34, 151);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+        LatLng myLocation = new LatLng(19.323570, -99.164410);
+        mMap.addMarker(new MarkerOptions().position(myLocation).title("My location"));
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(myLocation));
     }
 }
