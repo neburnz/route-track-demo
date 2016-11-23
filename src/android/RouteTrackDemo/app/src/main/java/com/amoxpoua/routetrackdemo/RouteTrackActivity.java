@@ -33,8 +33,8 @@ public class RouteTrackActivity extends FragmentActivity implements
     private GoogleMap mMap;
 
     private static final String TAG = "RouteTrackActivity";
-    private static final long INTERVAL = 1000 * 60 * 2;
-    private static final long FASTEST_INTERVAL = 1000 * 60 * 1;
+    private static final long INTERVAL = 1000 * 10;
+    private static final long FASTEST_INTERVAL = 1000 * 5;
 
     LocationRequest mLocationRequest;
     GoogleApiClient mGoogleApiClient;
