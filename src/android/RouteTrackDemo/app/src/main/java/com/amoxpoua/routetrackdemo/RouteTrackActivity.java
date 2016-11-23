@@ -171,6 +171,6 @@ public class RouteTrackActivity extends FragmentActivity implements
         options.position(currentLatLng);
 
         mMap.addMarker(options);
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(currentLatLng));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 13));
     }
 }
