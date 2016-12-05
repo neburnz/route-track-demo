@@ -1,6 +1,8 @@
 package com.amoxpoua.routetrackdemo;
 
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.location.Location;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
@@ -19,6 +21,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -30,21 +33,19 @@ public class RouteTrackActivity extends FragmentActivity implements
         GoogleApiClient.OnConnectionFailedListener,
         OnMapReadyCallback {
 
-    private GoogleMap mMap;
-
     private static final String TAG = "RouteTrackActivity";
-    private static final long INTERVAL = 1000 * 10;
-    private static final long FASTEST_INTERVAL = 1000 * 5;
-
+    private static final long INTERVAL = 1000 * 3;
+    private static final long FASTEST_INTERVAL = 1000 * 2;
     LocationRequest mLocationRequest;
     GoogleApiClient mGoogleApiClient;
     Location mCurrentLocation;
+    private GoogleMap mMap;
 
     protected void createLocationRequest() {
         mLocationRequest = new LocationRequest();
         mLocationRequest.setInterval(INTERVAL);
         mLocationRequest.setFastestInterval(FASTEST_INTERVAL);
-        mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+        mLocationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
     }
 
     @Override
@@ -165,12 +166,20 @@ public class RouteTrackActivity extends FragmentActivity implements
 
     private void addMarker() {
         Log.i(TAG, "Adding marker");
+
+        int height = 30;
+        int width = 30;
+        BitmapDrawable bitmapdraw = (BitmapDrawable)getResources().getDrawable(R.mipmap.ic_marker);
+        Bitmap b=bitmapdraw.getBitmap();
+        Bitmap smallMarker = Bitmap.createScaledBitmap(b, width, height, false);
+
         MarkerOptions options = new MarkerOptions();
 
         LatLng currentLatLng = new LatLng(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude());
         options.position(currentLatLng);
+        options.icon(BitmapDescriptorFactory.fromBitmap(smallMarker));
 
         mMap.addMarker(options);
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 13));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 18));
     }
 }
