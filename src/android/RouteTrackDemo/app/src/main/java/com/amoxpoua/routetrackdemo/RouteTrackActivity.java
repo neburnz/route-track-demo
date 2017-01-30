@@ -1,5 +1,6 @@
 package com.amoxpoua.routetrackdemo;
 
+import android.Manifest;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
@@ -160,8 +161,22 @@ public class RouteTrackActivity extends FragmentActivity implements
     @Override
     public void onMapReady(GoogleMap googleMap) {
         Log.i(TAG, "onMapReady event was called");
+
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
+
         mMap = googleMap;
         mMap.getUiSettings().setZoomControlsEnabled(true);
+        mMap.setMyLocationEnabled(true);
+        mMap.setBuildingsEnabled(true);
     }
 
     private void addMarker() {
@@ -180,6 +195,5 @@ public class RouteTrackActivity extends FragmentActivity implements
         options.icon(BitmapDescriptorFactory.fromBitmap(smallMarker));
 
         mMap.addMarker(options);
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 18));
     }
 }
